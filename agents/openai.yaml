@@ -1,7 +1,7 @@
 interface:
-  display_name: "Mingli"
-  short_description: "Complete Ziwei and Bazi fortune consultation"
-  default_prompt: "Use $mingli to deliver a complete Ziwei Doushu and Bazi reading from the user's birth details and explain the key life themes, timing, and practical guidance."
+  display_name: "Mingli Fortune"
+  short_description: "Ziwei and Bazi fortune readings with mingli-mcp"
+  default_prompt: "Use $mingli to give a complete Ziwei Doushu and Bazi reading from the user's birth details, including life themes, timing, confidence notes, and practical guidance."
 
 dependencies:
   tools:

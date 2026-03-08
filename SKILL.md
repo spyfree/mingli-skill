@@ -1,17 +1,35 @@
 ---
 name: mingli
-description: Comprehensive Chinese fortune-reading and 命理咨询 skill that combines Ziwei Doushu and Bazi using the `spyfree/mingli-mcp` server. Use when users ask for 算命、命理咨询、紫微斗数、八字、四柱、流年、大运、事业、财运、婚恋、性格、健康边界、人生方向, or want a full reading from birth details. Collect and normalize birth data, call the MCP tools to compute charts accurately, then deliver a structured consultation that separates chart facts, traditional interpretation, and practical guidance.
+description: Complete Chinese fortune-reading and 命理咨询 skill for Ziwei Doushu and Bazi, backed by the `spyfree/mingli-mcp` Smithery server. Use when users ask for 算命、命理咨询、紫微斗数、八字、四柱、流年、大运、性格、事业、财运、婚恋、婚姻、感情、健康倾向、人生方向, or want a full natal chart reading from birth details. Normalize the birth data, compute the charts accurately, then deliver a structured reading with chart facts, traditional analysis, confidence notes, timing guidance, and practical advice.
 ---
 
-# Mingli
+# Mingli Fortune Consultant
 
 ## Overview
 
 Use `spyfree/mingli-mcp` as the authoritative chart engine. Generate the chart first, reason from returned facts second, and present a complete consultation in clear sections.
 
+## Quick Start
+
+- Connect `spyfree/mingli-mcp` before using this skill.
+- If the user wants a full reading, collect birth date, birth time, gender, calendar type, and birthplace if known.
+- For the best result, combine:
+  - `get_ziwei_chart`
+  - `get_bazi_chart`
+  - `analyze_bazi_element`
+- Add fortune tools only when the user asks about `流年`, `大运`, current-year luck, or a specific period.
+
+## Common Requests
+
+- `帮我算命，看看事业、财运和婚姻。`
+- `请用紫微斗数和八字一起看我的命盘。`
+- `我想看 2026 年流年和未来十年大运。`
+- `Give me a full Ziwei and Bazi reading from my birth details.`
+- `Compare my natal structure with my current fortune cycle and tell me what to focus on.`
+
 ## Required Dependency
 
-Connect the `spyfree/mingli-mcp` MCP server before using this skill. Prefer `json` tool output for internal reasoning; use `markdown` only when the user explicitly wants raw tool-formatted output.
+Connect the `spyfree/mingli-mcp` MCP server before using this skill. The public Smithery server is `https://mingli-mcp--spyfree.run.tools`. Prefer `json` tool output for internal reasoning; use `markdown` only when the user explicitly wants raw tool-formatted output.
 
 ## Workflow
 
