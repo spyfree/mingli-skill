@@ -1,5 +1,5 @@
 ---
-name: mingli
+name: mingli-fortune
 description: Complete Chinese fortune-reading and 命理咨询 skill for Ziwei Doushu and Bazi, backed by the `spyfree/mingli-mcp` Smithery server. Use when users ask for 算命、命理咨询、紫微斗数、八字、四柱、流年、大运、性格、事业、财运、婚恋、婚姻、感情、健康倾向、人生方向, or want a full natal chart reading from birth details. Normalize the birth data, compute the charts accurately, then deliver a structured reading with chart facts, traditional analysis, confidence notes, timing guidance, and practical advice.
 ---
 
