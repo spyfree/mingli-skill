@@ -1,0 +1,15 @@
+interface:
+  display_name: "Mingli"
+  short_description: "Complete Ziwei and Bazi fortune consultation"
+  default_prompt: "Use $mingli to deliver a complete Ziwei Doushu and Bazi reading from the user's birth details and explain the key life themes, timing, and practical guidance."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "spyfree/mingli-mcp"
+      description: "Ziwei and Bazi chart engine on Smithery"
+      transport: "streamable_http"
+      url: "https://mingli-mcp--spyfree.run.tools"
+
+policy:
+  allow_implicit_invocation: true
