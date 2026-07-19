@@ -1,0 +1,16 @@
+{
+  "name": "mingli-fortune",
+  "displayName": "Mingli Fortune 命理咨询",
+  "version": "1.0.0",
+  "description": "一条龙紫微斗数 + 八字命理咨询：排盘由托管 MCP 服务完成（真太阳时/农历/6语言），解读方法论由 skill 驱动。One-stop Ziwei Doushu & Bazi consultations: hosted chart engine via MCP, structured reading methodology via skill. Requires a license key from https://lee.locker/mcp for chart tool calls.",
+  "author": {
+    "name": "spyfree",
+    "url": "https://github.com/spyfree"
+  },
+  "homepage": "https://lee.locker/mcp",
+  "repository": "https://github.com/spyfree/mingli-skill",
+  "license": "MIT",
+  "keywords": ["ziwei", "bazi", "fortune", "mingli", "紫微斗数", "八字", "算命", "mcp"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

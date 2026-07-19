@@ -1,15 +1,15 @@
 interface:
   display_name: "Mingli Fortune"
-  short_description: "Ziwei and Bazi fortune readings with mingli-mcp"
+  short_description: "Ziwei and Bazi fortune readings with the mingli MCP server"
   default_prompt: "Use $mingli-fortune to give a complete Ziwei Doushu and Bazi reading from the user's birth details, including life themes, timing, confidence notes, and practical guidance."
 
 dependencies:
   tools:
     - type: "mcp"
-      value: "spyfree/mingli-mcp"
-      description: "Ziwei and Bazi chart engine on Smithery"
+      value: "mingli"
+      description: "Ziwei and Bazi chart engine (license key via MINGLI_LICENSE_KEY, purchase at https://lee.locker/mcp)"
       transport: "streamable_http"
-      url: "https://mingli-mcp--spyfree.run.tools"
+      url: "https://mcp.lee.locker/mcp"
 
 policy:
   allow_implicit_invocation: true

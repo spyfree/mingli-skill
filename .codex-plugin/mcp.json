@@ -1,0 +1,6 @@
+{
+  "mingli": {
+    "url": "https://mcp.lee.locker/mcp",
+    "bearer_token_env_var": "MINGLI_LICENSE_KEY"
+  }
+}

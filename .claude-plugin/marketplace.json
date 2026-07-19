@@ -1,0 +1,17 @@
+{
+  "name": "mingli",
+  "owner": {
+    "name": "spyfree",
+    "url": "https://github.com/spyfree"
+  },
+  "metadata": {
+    "description": "Mingli fortune-telling plugins: Ziwei Doushu & Bazi chart engine + consultation skills"
+  },
+  "plugins": [
+    {
+      "name": "mingli-fortune",
+      "source": "./",
+      "description": "一条龙紫微斗数 + 八字命理咨询插件：托管排盘引擎（MCP）+ 结构化解读方法论（skill）。购买 License Key：https://lee.locker/mcp（$6.99 买断，每日 200 次调用）"
+    }
+  ]
+}

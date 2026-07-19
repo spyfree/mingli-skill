@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mingli": {
+      "type": "http",
+      "url": "https://mcp.lee.locker/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MINGLI_LICENSE_KEY:-}"
+      }
+    }
+  }
+}
