@@ -1,6 +1,6 @@
 {
   "name": "mingli-fortune",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "One-stop Ziwei Doushu & Bazi fortune consultations: hosted chart engine via MCP (true solar time, lunar calendar, 6 languages) plus a structured reading methodology skill. Chart tool calls require a license key from https://lee.locker/mcp — set it in the MINGLI_LICENSE_KEY environment variable.",
   "author": { "name": "spyfree", "url": "https://github.com/spyfree" },
   "homepage": "https://lee.locker/mcp",

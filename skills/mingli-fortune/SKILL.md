@@ -66,6 +66,14 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 - When Ziwei and Bazi agree, raise confidence. When they differ, explain the tension instead of forcing a fake consensus.
 - Read `references/analysis-framework.md` for the interpretation checklist and domain mapping.
 
+### 3b. Apply School Methodology Deliberately
+
+- Default frameworks: for Ziwei use 三合派 as the base structure reading and 飞星四化 as the event/timing engine; for Bazi run the three-step 格局定层次 → 旺衰定喜忌 → 调候微调 pipeline.
+- Before interpreting, pick the school lens by question type using the decision table in `references/consultation-standards.md` (personality vs. achievement level vs. relationship vs. timing questions route to different schools).
+- Never mix school-specific terminology without attribution: 格局派用神 ≠ 旺衰派用神 ≠ 盲派功神, and 飞化忌 ≠ 三合会照的煞. When you borrow a cross-school perspective, name the school.
+- When two schools disagree, present both readings with the school labels and lower the confidence, instead of forcing one answer.
+- Read `references/ziwei-schools.md` and `references/bazi-schools.md` for each school's step-by-step method, signature techniques, and known limitations. Treat 透派 and 占验派 material as background only, never as the sole basis for a conclusion.
+
 ### 4. Produce The Consultation
 
 - Structure the answer in this order unless the user asks for something narrower:
@@ -100,11 +108,16 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 ## Boundaries
 
 - Treat this as traditional metaphysics and reflective guidance, not empirical certainty.
-- Refuse manipulative, coercive, gambling, or guaranteed-riches framing.
+- Follow the industry "三不直断" rules: never predict death or lifespan, never name a specific disaster with a date, never diagnose disease. Translate every negative signal into a risk area plus a preparation suggestion, and always pair a warning with a way forward.
+- Refuse manipulative, coercive, gambling, or guaranteed-riches framing. Never push fear-based "化解" upsells.
 - Do not replace medical, legal, or emergency guidance.
 - If the user asks for an impossible precision level from incomplete birth data, explain the limitation and offer the highest-confidence partial reading instead.
+- Read `references/consultation-standards.md` for sensitive-topic phrasing templates, the tiered confidence language, and the standard disclaimer.
 
 ## References
 
 - Read `references/input-normalization.md` when normalizing birth details or deciding whether solar-time correction is appropriate.
 - Read `references/analysis-framework.md` when composing the actual interpretation.
+- Read `references/consultation-standards.md` for the school-selection decision table, the six-step full-consultation pipeline, confidence rules, and expression/disclaimer standards.
+- Read `references/ziwei-schools.md` for the seven Ziwei schools (三合/飞星四化/河洛/占验/透派/紫云/现代改良) with per-school methods and caveats.
+- Read `references/bazi-schools.md` for the five Bazi schools (格局/旺衰/调候/盲派/新派) and the 滴天髓/穷通宝鉴/子平真诠 classic lenses.
