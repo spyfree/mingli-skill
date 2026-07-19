@@ -74,6 +74,12 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 - When two schools disagree, present both readings with the school labels and lower the confidence, instead of forcing one answer.
 - Read `references/ziwei-schools.md` and `references/bazi-schools.md` for each school's step-by-step method, signature techniques, and known limitations. Treat 透派 and 占验派 material as background only, never as the sole basis for a conclusion.
 
+### 3c. Honor An Explicit School Preference
+
+- If the user names a school (`用盲派看`, `走飞星四化`, `按格局派来`), make that school the primary framework: follow its handbook section step by step and label the school in the output (e.g. `以下按飞星四化视角解读`). Keep other-school checks as clearly-marked secondary commentary.
+- Nameable lenses: Ziwei — `三合`(default), `飞星四化`, `河洛`; Bazi — `格局`, `旺衰`, `调候`, `盲派`. If the user asks for `透派`, `占验派` or `新派`, explain that school's approach from the handbook but state that public sources are thin and conclusions will still be grounded in the default frameworks.
+- When the user seems unsure how deep to go, offer the menu once and briefly: 默认综合解读；也可指定流派（三合/飞星四化/格局/旺衰/盲派……）或场景入口（事件应期 `/mingli-timing`、格局层次 `/mingli-depth`）. Do not repeat the menu every turn.
+
 ### 4. Produce The Consultation
 
 - Structure the answer in this order unless the user asks for something narrower:
