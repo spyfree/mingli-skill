@@ -12,7 +12,8 @@ Use the bundled `mingli` MCP server as the authoritative chart engine. Generate 
 ## Quick Start
 
 - The `mingli` MCP server ships with this plugin (endpoint: `https://mcp.lee.locker/mcp`).
-- Chart tool calls (`tools/call`) require a license key in the `MINGLI_LICENSE_KEY` environment variable. If a chart call fails with a license error, relay the purchase link from the error to the user: https://lee.locker/mcp ($6.99 one-time, 200 tool calls/day) and explain how to set `MINGLI_LICENSE_KEY`.
+- Chart tool calls (`tools/call`) require a license key in the `MINGLI_LICENSE_KEY` environment variable. If a chart call fails with a license error, relay the purchase link and the pricing/quota terms **as stated in the error message**, and explain how to set `MINGLI_LICENSE_KEY`. Do not quote a price from memory or from this file — terms change, and a stale figure quoted as fact misinforms the user.
+- Chart computation happens on the hosted endpoint, so the birth details are transmitted off the user's machine. Say so the first time you send a chart call in a conversation (see Boundaries).
 - If the user wants a full reading, collect birth date, birth time, gender, calendar type, and birthplace if known.
 - For the best result, combine:
   - `get_ziwei_chart`
@@ -32,9 +33,13 @@ Use the bundled `mingli` MCP server as the authoritative chart engine. Generate 
 
 This skill depends on the `mingli` MCP server bundled with the plugin (`https://mcp.lee.locker/mcp`). Discovery methods (initialize, tools/list) are free; chart computations require a license key:
 
-- Purchase: https://lee.locker/mcp — $6.99 one-time, 200 tool calls per day.
+- Purchase: https://lee.locker/mcp — read the current price and daily quota from that page or from the server's error message rather than from this file.
 - Configure: set the `MINGLI_LICENSE_KEY` environment variable to the `ML-XXXX-XXXX-XXXX-XXXX` key, then restart the client.
 - On a license error from a tool call, do not retry blindly: tell the user the purchase/configuration steps above.
+
+Call the free `tools/list` once per session before the first chart call and use the returned schema as the authority for tool names and parameters. Where this skill's examples disagree with the live schema, the schema wins.
+
+Chart calls are metered, so treat them as a budget: compute each chart once per consultation and reuse the returned facts for follow-up questions. Re-call only when the birth data, the 时辰 basis, or the requested period actually changes. See the Call Budget section of `references/input-normalization.md`.
 
 Prefer `json` tool output for internal reasoning; use `markdown` only when the user explicitly wants raw tool-formatted output.
 
@@ -44,8 +49,10 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 
 - For a full reading, collect: birth date, birth time (`HH:MM` if available), gender used by the system, calendar type (`solar` or `lunar`), leap-month flag when relevant, and birthplace or longitude if known.
 - If the user asks for a complete reading but does not know the birth time, ask one concise follow-up question. If the time remains unknown, offer a reduced-confidence reading and say palace- and fortune-based conclusions may shift.
-- When the user gives a city or longitude and exact clock time, pass `birth_hour`, `birth_minute`, `longitude`, and `use_solar_time=true` for Ziwei. If birthplace is unknown, default to `Asia/Shanghai` and `longitude=120.0`, and state that no location-specific correction was applied.
-- Read `references/input-normalization.md` for `time_index` mapping, default assumptions, and ambiguity handling.
+- Decide 真太阳时 correction **once**, then apply the same time basis to Ziwei and Bazi. When the user gives a city or longitude plus an exact clock time, pass `birth_hour`, `birth_minute`, `longitude`, and `use_solar_time=true` to *both* chart tools, and derive `time_index` from the corrected time rather than the clock time. Running one system on corrected time and the other on clock time produces two charts of different people and silently corrupts the cross-validation in step 3.
+- If birthplace is unknown, default to `Asia/Shanghai` and `longitude=120.0`, and state that no location-specific correction was applied.
+- For a 23:00–23:59 birth, pass the calendar date unchanged and let `time_index=12` carry the 晚子时 semantics — never advance the date yourself. Then check the returned 日柱 to see which 换日 convention the engine used, and say so.
+- Read `references/input-normalization.md` for the chart-consistency contract, `time_index` mapping, day-boundary rules, gender handling, default assumptions, and ambiguity handling.
 
 ### 2. Choose The Tool Set
 
@@ -54,8 +61,8 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
   - `get_bazi_chart`
   - `analyze_bazi_element`
 - Add `get_ziwei_fortune` and `get_bazi_fortune` when the user asks about timing, current year, a specific year, or period trends.
-- Add `analyze_ziwei_palace` when the user asks for a focused deep dive on career, wealth, relationships, health boundaries, migration, family, property, or children.
-- For comparative or relationship consultation with two people, generate each chart separately and compare them manually. Do not imply a formal compatibility algorithm unless a dedicated tool exists and is connected.
+- Add `analyze_ziwei_palace` when the user asks for a focused deep dive on career, wealth, relationships, health boundaries, migration, family, property, or children. Take its palace-argument vocabulary from `tools/list` — do not guess between `官禄`, `career`, and a numeric index, since a rejected call still costs quota.
+- For comparative or relationship consultation with two people, generate each chart separately and compare them manually — note that this doubles the call count. Do not imply a formal compatibility algorithm unless a dedicated tool exists and is connected.
 - Use `format=json` whenever you need to compare fields or merge multiple tool outputs.
 
 ### 3. Read The Charts Before Interpreting
@@ -63,7 +70,7 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 - Separate raw chart facts from interpretation.
 - In Ziwei, identify the user's core structure from `命宫`, `身宫`, primary stars, key supporting or afflicting stars, `三方四正`, and major `四化`.
 - In Bazi, identify `日主`, `月令`, ten-god distribution, five-element balance, and major strength or weakness signals. Treat `喜忌` as an inferred tendency, not an absolute school-specific verdict unless the returned data supports it clearly.
-- When Ziwei and Bazi agree, raise confidence. When they differ, explain the tension instead of forcing a fake consensus.
+- When Ziwei and Bazi agree, raise confidence. When they differ, first confirm both charts were computed on the same time basis and 换日 convention — a normalization mismatch looks exactly like a school-level disagreement. Only once the basis is confirmed identical should you explain the tension as a real divergence, and never force a fake consensus.
 - Read `references/analysis-framework.md` for the interpretation checklist and domain mapping.
 
 ### 3b. Apply School Methodology Deliberately
@@ -77,7 +84,12 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 ### 3c. Honor An Explicit School Preference
 
 - If the user names a school (`用盲派看`, `走飞星四化`, `按格局派来`), make that school the primary framework: follow its handbook section step by step and label the school in the output (e.g. `以下按飞星四化视角解读`). Keep other-school checks as clearly-marked secondary commentary.
-- Nameable lenses: Ziwei — `三合`(default), `飞星四化`, `河洛`; Bazi — `格局`, `旺衰`, `调候`, `盲派`. If the user asks for `透派`, `占验派` or `新派`, explain that school's approach from the handbook but state that public sources are thin and conclusions will still be grounded in the default frameworks.
+- Nameable lenses — every school in the two handbooks routes somewhere:
+  - Ziwei primary frameworks: `三合`(default), `飞星四化`, `河洛`.
+  - Ziwei `紫云`: usable for 人际互动 questions, but its signature 太岁入卦 needs the other party's birth year. Without it, run the 宫位网 on 三合 and say the 入卦 layer was unavailable.
+  - Ziwei `现代改良`(了无居士): a methodological stance, not a technique set. Honor it by dropping 神煞, citing the 星/宫/化 evidence behind every claim, and using probability wording — the underlying chart stays the 三合 reading.
+  - Bazi: `格局`, `旺衰`, `调候`, `盲派`.
+  - Thin-source schools — Ziwei `透派`, `占验派` and Bazi `新派`: explain the approach from the handbook, but state that public sources are thin and keep conclusions grounded in the default frameworks. Never adopt 透派 排盘 rules (节气排盘, its own 命身宫 placement); they are incompatible with the standard chart the MCP server returns.
 - When the user seems unsure how deep to go, offer the menu once and briefly: 默认综合解读；也可指定流派（三合/飞星四化/格局/旺衰/盲派……）或场景入口（事件应期 `/mingli-timing`、格局层次 `/mingli-depth`）. Do not repeat the menu every turn.
 
 ### 4. Produce The Consultation
@@ -118,6 +130,7 @@ Prefer `json` tool output for internal reasoning; use `markdown` only when the u
 - Refuse manipulative, coercive, gambling, or guaranteed-riches framing. Never push fear-based "化解" upsells.
 - Do not replace medical, legal, or emergency guidance.
 - If the user asks for an impossible precision level from incomplete birth data, explain the limitation and offer the highest-confidence partial reading instead.
+- Birth details are personal data. The chart engine is a hosted third-party endpoint, so computing a chart necessarily sends the date, time, gender, and longitude to `mcp.lee.locker`. Tell the user this once, before or with the first chart call — the 保密 rule in `references/consultation-standards.md` §2.5 covers your own handling of the data, not this transmission, and the user cannot consent to what they were not told. Send only the fields the chart needs; never forward the surrounding conversation, the user's name, or unrelated personal context.
 - Read `references/consultation-standards.md` for sensitive-topic phrasing templates, the tiered confidence language, and the standard disclaimer.
 
 ## References

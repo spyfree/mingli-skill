@@ -49,8 +49,9 @@ Treat these as guidance rules:
 
 ## Synthesis Rules
 
+- Before synthesizing, confirm both charts were computed from the same time basis and the same 换日 convention. A normalization mismatch — 真太阳时 applied to one system only, or a date advanced twice — presents exactly like a genuine school-level disagreement, and it will quietly drag confidence down for the wrong reason. See the Chart Consistency Contract in `input-normalization.md`.
 - Raise confidence when Ziwei and Bazi point in the same direction.
-- Explain divergence when the systems disagree.
+- Explain divergence when the systems disagree and the basis is confirmed identical.
 - Distinguish stable natal traits from current-cycle effects.
 - If Ziwei gives the structural picture and Bazi gives the energetic picture, merge them instead of making them compete.
 - If the user asks for one topic only, keep the synthesis narrow and relevant.
