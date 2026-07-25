@@ -65,15 +65,15 @@ One of the three 排盘事故源 named in `consultation-standards.md` §1.4. The
 
 Rule: **pass `date` exactly as it appears on the birth record. Never advance it yourself.** `time_index = 12` is what carries the 晚子时 semantics — let the engine apply its own convention.
 
-Then verify, because the two systems do not share a convention:
+Then verify, because conventions differ between 八字 schools as well as between the two systems:
 
-- 八字 under the 早晚子时 convention (which a 0-vs-12 split implies) advances 日柱 to the next day for a 23:xx birth, while 时柱 stays 子.
+- 八字 has two live conventions. The traditional 子初换日 rule starts the new day at 23:00, so a 23:xx birth gets the 日柱 of `date + 1` — this school does not distinguish 早/晚子时 at all. The 早晚子时 (夜子时) school changes the day at 00:00 instead: a 23:xx birth is 晚子时 of the current day, 日柱 stays on `date`, 时柱 stays 子. An engine exposing a 0-vs-12 split speaks the second school's vocabulary, but that alone does not guarantee its 日柱 handling — hence the check below.
 - 紫微 in most schools keeps the calendar day for 命宫 and 身宫 placement and does not advance.
 
 For any 23:00–23:59 birth, check the returned 日柱 against both candidates before interpreting:
 
-- returned 日柱 matches the 干支 of `date` → the engine uses 子正换日
-- returned 日柱 matches the 干支 of `date + 1` → the engine uses 早晚子时
+- returned 日柱 matches the 干支 of `date` → the engine uses 子正换日 (the 早晚子时/夜子时 convention)
+- returned 日柱 matches the 干支 of `date + 1` → the engine uses 子初换日 (the traditional 23:00 changeover, no 早/晚 split)
 
 State which convention applies in `排盘口径与置信度`, and note that 日主, 十神, and 格局 conclusions rest on it. If the returned data does not let you tell, treat every 日柱-based conclusion as low confidence rather than guessing.
 
@@ -174,7 +174,7 @@ For the analysis tools (`analyze_bazi_element`, `analyze_ziwei_palace`): the pal
 
 ## Call Budget
 
-The license allows 200 tool calls per day. Treat calls as a budget:
+Chart calls are metered under a daily quota — take the current figure from the purchase page or the server's limit error, never from this file, for the same reason `SKILL.md` does not hardcode the price. Treat calls as a budget:
 
 - Compute each chart once per consultation and reuse the returned facts for follow-up questions. Re-call only when the birth data, the 时辰 basis, or the requested period changes.
 - A full reading is 3 calls; adding both fortune tools makes 5. A two-person comparison doubles it.
